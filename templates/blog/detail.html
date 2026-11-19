@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.meta_title|default:post.title }} — {{ site_settings.name }}{% endblock %}
+{% block meta_description %}{{ post.meta_description|default:post.short_description }}{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.short_description }}{% endblock %}
+
+{% block content %}
+<article class="row g-4">
+  <div class="col-lg-8">
+    <header class="mb-4">
+      <h1 class="h2">{{ post.title }}</h1>
+      <p class="text-body-secondary small">
+        {{ post.published_at|date:"j E Y" }}
+        {% if post.author %}· {{ post.author.get_full_name|default:post.author.username }}{% endif %}
+      </p>
+      {% for tag in post.tags.all %}
+        <span class="badge bg-light text-dark border me-1">{{ tag.name }}</span>
+      {% endfor %}
+    </header>
+
+    {% if post.cover %}
+      <img src="{{ post.cover.url }}" alt="{{ post.title }}" class="img-fluid rounded mb-4">
+    {% endif %}
+
+    <div class="lh-lg">
+      {{ post.text|linebreaks }}
+    </div>
+
+    <div class="mt-5 p-4 bg-light rounded text-center">
+      <p class="mb-2">Нужен сайт или доработка?</p>
+      <a href="{% url 'core:contact' %}" class="btn btn-primary">Обсудить проект</a>
+    </div>
+  </div>
+</article>
+{% endblock %}

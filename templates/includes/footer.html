@@ -1,0 +1,32 @@
+<footer class="border-top py-4 mt-auto bg-light">
+  <div class="container">
+    <div class="row g-3 align-items-center">
+      <div class="col-md-6 text-center text-md-start small text-body-secondary">
+        © {% now "Y" %} {{ site_settings.name|default:"Портфолио" }}.
+        <a href="{% url 'core:privacy' %}" class="link-secondary">Политика конфиденциальности</a>
+      </div>
+      <div class="col-md-6 text-center text-md-end">
+        {% if site_settings.github %}
+          <a href="{{ site_settings.github }}" class="text-decoration-none me-3" target="_blank" rel="noopener" aria-label="GitHub">
+            <i class="bi bi-github fs-5"></i>
+          </a>
+        {% endif %}
+        {% if site_settings.linkedin %}
+          <a href="{{ site_settings.linkedin }}" class="text-decoration-none me-3" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <i class="bi bi-linkedin fs-5"></i>
+          </a>
+        {% endif %}
+        {% if site_settings.telegram %}
+          <a href="{{ site_settings.telegram }}" class="text-decoration-none me-3" target="_blank" rel="noopener" aria-label="Telegram">
+            <i class="bi bi-telegram fs-5"></i>
+          </a>
+        {% endif %}
+        {% if site_settings.email %}
+          <a href="mailto:{{ site_settings.email }}" class="text-decoration-none" aria-label="Email">
+            <i class="bi bi-envelope fs-5"></i>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</footer>

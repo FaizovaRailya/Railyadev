@@ -1,0 +1,61 @@
+# ============================================================
+# Ruff — линтер
+# ============================================================
+[tool.ruff]
+# Целевая версия Python. Если ruff ещё не знает "py315",
+# используйте "py313" — синтаксис 3.13-3.15 для линтера
+# практически не отличается.
+target-version = "py312"
+line-length = 100
+src = ["apps", "config", "tests"]
+exclude = [
+    ".venv",
+    "venv",
+    "migrations",
+    "staticfiles",
+    "media",
+    "__pycache__",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "DJ",  # flake8-django
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+]
+ignore = [
+    "E501",  # длина строки — контроль у black
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["apps", "config"]
+
+# ============================================================
+# Black — форматтер
+# ============================================================
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+extend-exclude = """
+/(
+    \\.venv
+  | venv
+  | migrations
+  | staticfiles
+  | media
+)/
+"""
+
+# ============================================================
+# Pytest
+# ============================================================
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.dev"
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"

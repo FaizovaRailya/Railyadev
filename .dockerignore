@@ -1,0 +1,48 @@
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Django
+*.log
+db.sqlite3
+/staticfiles/
+/media/
+
+# Env (секреты НЕ в образ!)
+.env
+.env.*
+!.env.example
+
+# Dev-зависимости и локальные конфиги
+requirements-dev.txt
+Makefile
+README.md
+docker-compose.override.yml
+
+# Docker (чтобы не рекурсивно копировать)
+Dockerfile
+.dockerignore
+docker-compose.yml

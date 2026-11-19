@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Портфолио — {{ site_settings.name }}{% endblock %}
+
+{% block content %}
+<h1 class="h2 mb-4">Портфолио</h1>
+
+{# Фильтры #}
+<form method="get" class="row g-2 mb-4">
+  <div class="col-md-4">
+    <select name="technology" class="form-select">
+      <option value="">Все технологии</option>
+      {% for tech in technologies %}
+        <option value="{{ tech.slug }}" {% if current_tech == tech.slug %}selected{% endif %}>{{ tech.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-4">
+    <select name="category" class="form-select">
+      <option value="">Все категории</option>
+      {% for value, label in categories %}
+        <option value="{{ value }}" {% if current_category == value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-4">
+    <button class="btn btn-outline-primary w-100">Применить</button>
+  </div>
+</form>
+
+<div class="row g-3">
+  {% for project in page_obj %}
+    <div class="col-md-6 col-lg-4">
+      <a href="{{ project.get_absolute_url }}" class="card h-100 text-decoration-none text-dark shadow-sm">
+        {% if project.cover %}
+          <img src="{{ project.cover.url }}" alt="{{ project.name }}" class="card-img-top"
+               style="aspect-ratio: 16/9; object-fit: cover;">
+        {% endif %}
+        <div class="card-body">
+          <h2 class="h5">{{ project.name }}</h2>
+          <p class="text-body-secondary small mb-2">{{ project.short_description|truncatewords:20 }}</p>
+          {% for tech in project.technologies.all %}
+            <span class="badge bg-light text-dark border me-1">{{ tech.name }}</span>
+          {% endfor %}
+        </div>
+      </a>
+    </div>
+  {% empty %}
+    <p class="text-body-secondary">По выбранным фильтрам кейсов нет.</p>
+  {% endfor %}
+</div>
+
+{% include "includes/pagination.html" %}
+{% endblock %}

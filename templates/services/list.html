@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Услуги — {{ site_settings.name }}{% endblock %}
+
+{% block content %}
+<h1 class="h2 mb-4">Услуги</h1>
+
+<div class="row g-3">
+  {% for service in services %}
+    <div class="col-md-6" id="{{ service.slug }}">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body d-flex flex-column">
+          {% if service.icon %}
+            <i class="bi {{ service.icon }} fs-2 text-primary mb-2"></i>
+          {% endif %}
+          <h2 class="h4">{{ service.name }}</h2>
+          <p class="text-body-secondary small">{{ service.short_description }}</p>
+          <div class="mt-auto">
+            <p class="mb-1">{{ service.full_description|linebreaks|truncatewords:60 }}</p>
+            {% if service.price_from %}
+              <p class="mb-1"><strong>от {{ service.price_from|floatformat:0 }} ₽</strong></p>
+            {% endif %}
+            {% if service.duration %}
+              <p class="mb-2 text-body-secondary small">Срок: {{ service.duration }}</p>
+            {% endif %}
+            <a href="{% url 'core:contact' %}" class="btn btn-primary">Обсудить</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-body-secondary">Услуги пока не добавлены.</p>
+  {% endfor %}
+</div>
+{% endblock %}

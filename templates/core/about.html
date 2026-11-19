@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Обо мне — {{ site_settings.name }}{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-4 text-center">
+    {% if site_settings.avatar %}
+      <img src="{{ site_settings.avatar.url }}" alt="{{ site_settings.name }}"
+           class="rounded-circle img-fluid mb-3" style="max-width: 240px;">
+    {% endif %}
+    <h1 class="h3">{{ site_settings.name }}</h1>
+    {% if site_settings.slogan %}<p class="text-body-secondary">{{ site_settings.slogan }}</p>{% endif %}
+  </div>
+
+  <div class="col-md-8">
+    <h2 class="h4">Специализация</h2>
+    <p>Веб-разработчик на Django. Проектирую и запускаю сайты под ключ: от брифа до продакшена.</p>
+
+    <h2 class="h4 mt-4">Навыки</h2>
+    {% for category, items in skills_by_category.items %}
+      <div class="mb-3">
+        <h3 class="h6 text-body-secondary">{{ category }}</h3>
+        {% for skill in items %}
+          <div class="mb-2">
+            <div class="d-flex justify-content-between small mb-1">
+              <span>{{ skill.name }}</span>
+              <span>{{ skill.level }}%</span>
+            </div>
+            <div class="progress" style="height: 6px;">
+              <div class="progress-bar" role="progressbar"
+                   style="width: {{ skill.level }}%"
+                   aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    <h2 class="h4 mt-4">Ссылки</h2>
+    <p>
+      {% if site_settings.github %}<a href="{{ site_settings.github }}" class="me-3" target="_blank" rel="noopener">GitHub</a>{% endif %}
+      {% if site_settings.linkedin %}<a href="{{ site_settings.linkedin }}" class="me-3" target="_blank" rel="noopener">LinkedIn</a>{% endif %}
+      {% if site_settings.telegram %}<a href="{{ site_settings.telegram }}" class="me-3" target="_blank" rel="noopener">Telegram</a>{% endif %}
+    </p>
+  </div>
+</div>
+{% endblock %}

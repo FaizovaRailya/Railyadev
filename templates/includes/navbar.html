@@ -1,0 +1,62 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+  <div class="container">
+
+    {# Логотип / имя бренда #}
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" href="{% url 'core:home' %}">
+      {% if site_settings.avatar %}
+        <img src="{{ site_settings.avatar.url }}" alt="{{ site_settings.name }}" height="36" class="rounded">
+      {% endif %}
+      <span>{{ site_settings.name|default:"Портфолио" }}</span>
+    </a>
+
+    {# Burger для мобильных #}
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar" aria-expanded="false"
+            aria-label="Открыть меню">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNavbar">
+
+      {# Контакты: город, адрес, телефон #}
+      <div class="ms-lg-4 me-lg-auto small text-lg-start text-center">
+        {% if site_settings.city %}
+          <div class="text-body-secondary">
+            <i class="bi bi-geo-alt"></i> {{ site_settings.city }}
+          </div>
+        {% endif %}
+        {% if site_settings.postal_address %}
+          <div class="text-body-secondary d-none d-lg-block">
+            {{ site_settings.postal_address }}
+          </div>
+        {% endif %}
+        {% if site_settings.phone %}
+          <a href="tel:{{ site_settings.phone|cut:' ' }}" class="text-decoration-none">
+            <i class="bi bi-telephone"></i> {{ site_settings.phone }}
+          </a>
+        {% endif %}
+      </div>
+
+      {# Соцсети + CTA #}
+      <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0 justify-content-center">
+        {% if site_settings.telegram %}
+          <a href="{{ site_settings.telegram }}" target="_blank" rel="noopener"
+             class="text-decoration-none fs-5" aria-label="Telegram">
+            <i class="bi bi-telegram"></i>
+          </a>
+        {% endif %}
+        {% if site_settings.max_url %}
+          <a href="{{ site_settings.max_url }}" target="_blank" rel="noopener"
+             class="text-decoration-none fs-5" aria-label="MAX">
+            <i class="bi bi-chat-dots-fill"></i>
+          </a>
+        {% endif %}
+        <a href="{% url 'core:contact' %}" class="btn btn-primary">
+          Обсудить проект
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

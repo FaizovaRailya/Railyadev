@@ -1,0 +1,8 @@
+# Все shell-скрипты — LF, иначе в Linux-контейнере "#!/bin/sh\r" ломается
+*.sh text eol=lf
+entrypoint.sh text eol=lf
+Dockerfile text eol=lf
+Makefile text eol=lf
+
+# Python — LF на всех платформах
+*.py text eol=lf

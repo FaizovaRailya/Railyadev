@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.name }} — {{ site_settings.name }}{% endblock %}
+
+{% block content %}
+<article>
+  <header class="mb-4">
+    <h1 class="h2">{{ project.name }}</h1>
+    <p class="text-body-secondary">{{ project.short_description }}</p>
+    {% for tech in project.technologies.all %}
+      <span class="badge bg-light text-dark border me-1">{{ tech.name }}</span>
+    {% endfor %}
+  </header>
+
+  {% if project.cover %}
+    <img src="{{ project.cover.url }}" alt="{{ project.name }}" class="img-fluid rounded mb-4">
+  {% endif %}
+
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <h2 class="h4">Задача</h2>
+      <p>{{ project.task|linebreaks }}</p>
+
+      <h2 class="h4 mt-4">Решение</h2>
+      <p>{{ project.solution|linebreaks }}</p>
+
+      <h2 class="h4 mt-4">Результат</h2>
+      <p>{{ project.result|linebreaks }}</p>
+
+      {% if project.images.all %}
+        <h2 class="h4 mt-4">Галерея</h2>
+        <div class="row g-2">
+          {% for image in project.images.all %}
+            <div class="col-md-6">
+              <img src="{{ image.image.url }}" alt="{{ image.alt|default:project.name }}"
+                   class="img-fluid rounded">
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <aside class="col-lg-4">
+      <div class="border rounded p-3">
+        <p class="mb-2"><strong>Дата:</strong> {{ project.date|date:"j E Y" }}</p>
+
+        {% if project.site_url %}
+          <a href="{{ project.site_url }}" class="btn btn-outline-primary w-100 mb-2" target="_blank" rel="noopener">
+            Живой сайт
+          </a>
+        {% endif %}
+        {% if project.repo_url %}
+          <a href="{{ project.repo_url }}" class="btn btn-outline-secondary w-100 mb-2" target="_blank" rel="noopener">
+            Репозиторий
+          </a>
+        {% endif %}
+
+        <a href="{% url 'core:contact' %}" class="btn btn-primary w-100 mt-2">Обсудить похожий проект</a>
+      </div>
+
+      {% if project.testimonial %}
+        <blockquote class="border-start border-3 border-primary ps-3 mt-4">
+          <p class="mb-2">{{ project.testimonial.text }}</p>
+          <footer class="blockquote-footer small mb-0">
+            {{ project.testimonial.name }}{% if project.testimonial.company %}, {{ project.testimonial.company }}{% endif %}
+          </footer>
+        </blockquote>
+      {% endif %}
+    </aside>
+  </div>
+</article>
+{% endblock %}
