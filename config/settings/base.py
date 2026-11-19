@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
-    "django_bootstrap5",
     # Локальные
     "apps.core",
     "apps.portfolio",

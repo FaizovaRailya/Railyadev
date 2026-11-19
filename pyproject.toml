@@ -39,7 +39,7 @@ known-first-party = ["apps", "config"]
 [tool.black]
 line-length = 100
 target-version = ["py312"]
-extend-exclude = """
+extend-exclude = '''
 /(
     \\.venv
   | venv
@@ -47,7 +47,7 @@ extend-exclude = """
   | staticfiles
   | media
 )/
-"""
+'''
 
 # ============================================================
 # Pytest
